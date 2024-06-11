@@ -1,21 +1,25 @@
 from flask import Flask, render_template, request, jsonify
 import pandas as pd
 import joblib
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
 
 app = Flask(__name__)
 
-# Load data for preprocessing and label encoding
+# Load data
 data = pd.read_csv('StudentsPerformance.csv')
 
-# Preprocess data to get the same label encoder used during training
+# Preprocess data
+X = data[['math score', 'reading score', 'writing score']]  # Features
 y = data['parental level of education']  # Target variable
+
+# Encoding categorical variables if any
 label_encoder = LabelEncoder()
-label_encoder.fit(y)
+y = label_encoder.fit_transform(y)
 
-# Load trained model
+# Load model
 model = joblib.load('finalized_model.sav')
-
+model.fit(X, y)
 # Define a route for the homepage
 @app.route('/')
 def home():
@@ -34,7 +38,7 @@ def predict():
         # Decode the predicted label if needed
         prediction = label_encoder.inverse_transform([prediction])[0]
         
-        # Return the prediction result
+        # Return the prediction result 
         return f"The predicted parental level of education is: {prediction}"
 
 if __name__ == '__main__':
