@@ -1,0 +1,25 @@
+<!-- Mở Terminal chạy : python app.py  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parental Education Prediction</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <h1>Predict Parental Education Level</h1>
+    <form action="/predict" method="post">
+        <label for="math_score">Math Score:</label><br>
+        <input type="text" id="math_score" name="math_score"><br>
+        
+        <label for="reading_score">Reading Score:</label><br>
+        <input type="text" id="reading_score" name="reading_score"><br>
+        
+        <label for="writing_score">Writing Score:</label><br>
+        <input type="text" id="writing_score" name="writing_score"><br>
+        
+        <input type="submit" value="Predict">
+    </form>
+</body>
+</html>
