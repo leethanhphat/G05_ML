@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import pandas as pd
 import joblib
 from sklearn.ensemble import RandomForestClassifier
@@ -17,16 +17,9 @@ y = data['parental level of education']  # Target variable
 label_encoder = LabelEncoder()
 y = label_encoder.fit_transform(y)
 
-# Train model
-model = RandomForestClassifier()
-model.fit(X, y)
-
-# Save model
-joblib.dump(model, 'finalized_model.sav')
-
 # Load model
 model = joblib.load('finalized_model.sav')
-
+model.fit(X, y)
 # Define a route for the homepage
 @app.route('/')
 def home():
@@ -45,7 +38,7 @@ def predict():
         # Decode the predicted label if needed
         prediction = label_encoder.inverse_transform([prediction])[0]
         
-        # Return the prediction result
+        # Return the prediction result 
         return f"The predicted parental level of education is: {prediction}"
 
 if __name__ == '__main__':
